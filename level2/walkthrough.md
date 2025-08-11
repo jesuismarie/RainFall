@@ -79,8 +79,8 @@
 	Confirm `strdup()` returned `/bin/sh` string:
 
 	```gdb
-	(gdb) p (char*)$eax
-	$3 = 0x0804a008 "/bin/sh"
+	(gdb) x/s $eax
+	0x804a008:	 "/bin/sh"
 	```
 
 	This confirms the memory address to pass to `system()`.
