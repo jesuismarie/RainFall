@@ -1,6 +1,6 @@
 # Level 0 Walkthrough
 
-1. **List the contents of the home directory**
+1. **List the contents of the home directory.**
 
 	```bash
 	ls -l

