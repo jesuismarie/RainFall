@@ -1,6 +1,6 @@
 # Level 0 Walkthrough
 
-1. **List the contents of the home directory.**
+1. **List the contents of the home directory..**
 
 	```bash
 	ls -l
@@ -8,7 +8,7 @@
 
 	Output shows the `level0` binary is SUID and owned by `level1`.
 
-2. **Test the binary**
+2. **Test the binary.**
 
 	```bash
 	./level0
@@ -16,13 +16,13 @@
 
 	Result: segmentation fault when no arguments are passed.
 
-3. **Copy the binary to local machine for analysis**
+3. **Copy the binary to local machine for analysis.**
 
 	```bash
 	scp -P 4242 level0@<vm-ip>:/home/user/level0/level0 .
 	```
 
-4. **Open the binary in Ghidra**
+4. **Open the binary in Ghidra.**
 	Analyze the main function. A key line is:
 
 	```c
@@ -37,7 +37,7 @@
 
 	It checks if the argument passed is equal to `0x1a7` (decimal: 423).
 
-5. **Execute the binary with the correct argument**
+5. **Execute the binary with the correct argument.**
 
 	```bash
 	./level0 423
@@ -45,7 +45,7 @@
 
 	This gives a shell with `level1` user privileges.
 
-6. **Read the password for level1**
+6. **Read the password for level1.**
 
 	```bash
 	cat /home/user/level1/.pass

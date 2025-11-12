@@ -1,12 +1,12 @@
 # Level 7 Walkthrough
 
-1. **Connect to the target machine**
+1. **Connect to the target machine.**
 
 	```bash
 	ssh level7@<vm-ip> -p 4242
 	```
 
-2. **Check the files**
+2. **Check the files.**
 
 	```bash
 	ls -l
@@ -18,7 +18,7 @@
 	-rwsr-s---+ 1 level8 users 5138 Mar  6  2016 level7
 	```
 
-3. **Test the binary**
+3. **Test the binary.**
 
 	```bash
 	./level7
@@ -30,13 +30,13 @@
 	Segmentation fault (core dumped)
 	```
 
-4. **Copy the binary locally for analysis**
+4. **Copy the binary locally for analysis.**
 
 	```bash
 	scp -P 4242 level7@<vm-ip>:/home/user/level7/level7 .
 	```
 
-5. **Analyze with GDB**
+5. **Analyze with GDB.**
 
 	```bash
 	gdb level7
@@ -64,7 +64,7 @@
 
 	This means we can **overwrite the GOT entry for `puts()`** to point to our target function `m()`.
 
-6. **Addresses of interest**
+6. **Addresses of interest.**
 
 	```bash
 	(gdb) x/i 0x8048400
@@ -81,7 +81,7 @@
 	* GOT entry for `puts`: `0x8049928`
 	* Address of `m()`: `0x080484f4`
 
-7. **Calculate overflow offset**
+7. **Calculate overflow offset.**
 
 	Memory layout for the first structure:
 
@@ -97,7 +97,7 @@
 	24 bytes total - 4 bytes (for the pointer we overwrite) = 20 bytes
 	```
 
-8. **Build and execute exploit**
+8. **Build and execute exploit.**
 
 	We pass two arguments:
 

